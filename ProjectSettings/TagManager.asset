@@ -41,3 +41,27 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Water
+    uniqueID: 3294242265
+    locked: 0
+  - name: Terrain
+    uniqueID: 2798237857
+    locked: 0
+  - name: Rocks
+    uniqueID: 4290584549
+    locked: 0
+  - name: TreesBase
+    uniqueID: 1884750811
+    locked: 0
+  - name: TreeTops
+    uniqueID: 1682962413
+    locked: 0
+  - name: HousesBase
+    uniqueID: 1093873817
+    locked: 0
+  - name: Door
+    uniqueID: 2710714735
+    locked: 0
+  - name: HouseTops
+    uniqueID: 379816051
+    locked: 0
