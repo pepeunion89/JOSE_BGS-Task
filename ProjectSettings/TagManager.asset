@@ -53,14 +53,17 @@ TagManager:
   - name: TreesBase
     uniqueID: 1884750811
     locked: 0
-  - name: TreeTops
-    uniqueID: 1682962413
-    locked: 0
   - name: HousesBase
     uniqueID: 1093873817
     locked: 0
   - name: Door
     uniqueID: 2710714735
+    locked: 0
+  - name: Player
+    uniqueID: 3946456581
+    locked: 0
+  - name: TreeTops
+    uniqueID: 1682962413
     locked: 0
   - name: HouseTops
     uniqueID: 379816051
