@@ -10,7 +10,6 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     [SerializeField] public ItemShirtSO itemShirtSO;
     [SerializeField] public Sprite transparent;
     [SerializeField] public Button btnSell;
-    [SerializeField] public Transform shirtImageEquipped;
     [SerializeField] public int idxSlot;
 
     private RectTransform draggableTransform;
@@ -19,7 +18,10 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     private bool isNotNull = false;
     private bool dragging = true;
 
-    //private Vector2 vectorDivisor = new Vector2(8.4f, 1.6f);
+    private Animator animator;
+    private Animator boyAnimator;
+    private Transform boy;
+    private SpriteRenderer boySprite;
 
     private void Awake() {
 
@@ -108,7 +110,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
        
     public void OnDrop(PointerEventData eventData) {
 
-        if (eventData.pointerDrag.gameObject.GetComponent<Draggable>().isNotNull) {
+        if (eventData.pointerDrag.gameObject.GetComponent<Draggable>().itemShirtSO != null/*.isNotNull*/) {
 
             List<ItemShirtSO> itemShirtSOList = Player.Instance.GetInventory().GetItemShirtList();
 
@@ -121,23 +123,51 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
                 if(idxDropped == 2 || idxChanged == 2) {
 
-                    if(idxDropped == 2) {
+                    boy = Player.Instance.boy;
+                    boyAnimator = boy.GetComponent<Animator>();
+                    boySprite = boy.GetComponent<SpriteRenderer>();
+
+                    if (idxDropped == 2) {
 
                         if(gameObject.GetComponent<Image>().sprite.name == "transparent") {
 
-                            shirtImageEquipped.GetComponent<SpriteRenderer>().sprite = null;
+                            animator = AnimatorManager.Instance.GreenAnimation;
+                            boySprite.sprite = AnimatorManager.Instance.GreenSprite;
+                            
 
                         } else {
 
-                            shirtImageEquipped.GetComponent<SpriteRenderer>().sprite = gameObject.GetComponent<Image>().sprite;
+                            if(gameObject.GetComponent<Draggable>().itemShirtSO.itemShirtName == "ManchesterCityShirt") {
+
+                                animator = AnimatorManager.Instance.ManchesterCityAnimation;
+                                boySprite.sprite = AnimatorManager.Instance.ManchesterCitySprite;
+
+                            } else {
+
+                                animator = AnimatorManager.Instance.ManchesterUnitedAnimation;
+                                boySprite.sprite = AnimatorManager.Instance.ManchesterUnitedSprite;
+
+                            }
 
                         }
 
                     } else {
 
-                        shirtImageEquipped.GetComponent<SpriteRenderer>().sprite = droppedObject.GetComponent<Image>().sprite;
+                        if (droppedObject.GetComponent<Draggable>().itemShirtSO.itemShirtName == "ManchesterCityShirt") {
+
+                            animator = AnimatorManager.Instance.ManchesterCityAnimation;
+                            boySprite.sprite = AnimatorManager.Instance.ManchesterCitySprite;
+
+                        } else {
+
+                            animator = AnimatorManager.Instance.ManchesterUnitedAnimation;
+                            boySprite.sprite = AnimatorManager.Instance.ManchesterUnitedSprite;
+
+                        }
 
                     }
+
+                    boyAnimator.runtimeAnimatorController = animator.runtimeAnimatorController;
 
                 }
 
@@ -170,6 +200,13 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
                 InventoryUI.Instance.RefreshInventory(itemShirtSOList);
 
             }
+
+        } else {
+
+            if (gameObject.GetComponent<Draggable>().btnSell != null) {
+                gameObject.GetComponent<Draggable>().btnSell.gameObject.SetActive(false);
+            }
+            Debug.Log("You are not dropping anything.");
 
         }
 

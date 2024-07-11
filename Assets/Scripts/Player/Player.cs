@@ -9,16 +9,13 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
     public static Player Instance { get; private set; }
 
+    [SerializeField] public Transform boy;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Image inventoryUIImage;
     [SerializeField] private InventoryUI inventoryUIImageScript;
     [SerializeField] public TextMeshProUGUI moneyTextField;
     [SerializeField] public int money;
-
-    private float maxRotationAngle = 7f; 
-    private float rotationSpeed = 25f; 
-    private float rotationTime = 0f;
 
     private bool showingMessage;
     public bool openInventory = false;
@@ -34,13 +31,14 @@ public class Player : MonoBehaviour {
         }
 
         inventory = new Inventory();
-        inventoryUIImageScript.SetInventory(inventory);
 
         money = 100;
 
     }
-    void Start()
-    {
+    void Start() {
+
+        inventoryUIImageScript.SetInventory(inventory);
+
         playerController.OnInteractAction += Player_OnInteractAction;
         playerController.OnInventoryAction += Player_OnInventoryAction;
 
@@ -69,16 +67,10 @@ public class Player : MonoBehaviour {
     private void MovePlayer() {
 
         Vector2 moveDirection = playerController.GetMovementNormalized();
+
         playerMovement.HandleMovement(moveDirection);
 
-        if (moveDirection.x != 0 || moveDirection.y != 0) {
-            rotationTime += Time.deltaTime * rotationSpeed;
-            float rotationAngle = Mathf.Sin(rotationTime) * maxRotationAngle;
-            gameObject.transform.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
-        } else {
-            gameObject.transform.localRotation = Quaternion.Euler(0f, 0f, 0);
-            rotationTime = 0f; 
-        }
+        playerMovement.UpdateDirectionMovementAnimation(moveDirection, boy);
 
     }
 
