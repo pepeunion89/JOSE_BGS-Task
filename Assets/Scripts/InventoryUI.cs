@@ -70,7 +70,7 @@ public class InventoryUI : MonoBehaviour
         RefreshInventory(listItemShirtSO as List<ItemShirtSO>);
     }
 
-    void RefreshInventory(List<ItemShirtSO> itemShirtSOList) {
+    public void RefreshInventory(List<ItemShirtSO> itemShirtSOList) {
 
         for(int position = 0; position <2; position++) {
 
