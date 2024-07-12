@@ -27,40 +27,38 @@ public class PlayerMovement : MonoBehaviour {
         ResetAllAnimationBools();
 
         if (movementDirection == Vector2.zero) {
-            // No movement
             return;
         }
 
-        if (Mathf.Approximately(movementDirection.x, 0) && Mathf.Approximately(movementDirection.y, 1)) {
-
+        if (direction.x == 0 && direction.y == 5) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingUp, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, 1) && Mathf.Approximately(movementDirection.y, 0)) {
-
+        if (direction.x == 5 && direction.y == 0) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingRight, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, 0) && Mathf.Approximately(movementDirection.y, -1)) {
-
+        if (direction.x == 0 && direction.y == -5) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingDown, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, -1) && Mathf.Approximately(movementDirection.y, 0)) {
-
+        if (direction.x == -5 && direction.y == 0) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingLeft, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, 0.707f) && Mathf.Approximately(movementDirection.y, 0.707f)) {
-
+        if (Math.Truncate(direction.x * 10) == 35 && Math.Truncate(direction.y * 10) == 35) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingUp, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, -0.707f) && Mathf.Approximately(movementDirection.y, 0.707f)) {
-
+        if (Math.Truncate(direction.x * 10) == -35 && Math.Truncate(direction.y * 10) == 35) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingUp, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, 0.707f) && Mathf.Approximately(movementDirection.y, -0.707f)) {
-
+        if (Math.Truncate(direction.x * 10) == 35 && Math.Truncate(direction.y * 10) == -35) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingDown, true);
+        }
 
-        } else if (Mathf.Approximately(movementDirection.x, -0.707f) && Mathf.Approximately(movementDirection.y, -0.707f)) {
-
+        if (Math.Truncate(direction.x * 10) == -35 && Math.Truncate(direction.y * 10) == -35) {
             animator.SetBool(Constants.PlayerConstants.IsWalkingDown, true);
         }
     }
